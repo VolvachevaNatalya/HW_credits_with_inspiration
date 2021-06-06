@@ -1,6 +1,8 @@
 package credits;
 
-public class RegularClerk {
+import java.util.Random;
+
+public class RegularClerk extends Thread {
 
     String name;
     int minTime;
@@ -14,19 +16,22 @@ public class RegularClerk {
         this.numberOfCredits = numberOfCredits;
     }
 
-    public String getName() {
-        return name;
+    public RegularClerk() {
     }
 
-    public int getMinTime() {
-        return minTime;
-    }
+    @Override
+    public void run() {
+        long start = System.currentTimeMillis();
+        for (int i = 0; i < numberOfCredits; i++) {
+            try {
+                Thread.sleep(new Random().nextInt(maxTime-minTime) + minTime);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        long end = System.currentTimeMillis();
+        System.out.println("Clerk " + name + " issued " + numberOfCredits + " credits during " + (end-start) + "ms." );
 
-    public int getMaxTime() {
-        return maxTime;
-    }
 
-    public int getNumberOfCredits() {
-        return numberOfCredits;
     }
 }
